@@ -4,4 +4,4 @@ metadata:
   name: {{ .Release.Namespace }}
   labels:
     name: {{ .Release.Namespace }}
-    argocd.argoproj.io/managed-by: {{ .Values.argocdName }} 
+    # argocd.argoproj.io/managed-by: {{ .Values.argocdName }} 
