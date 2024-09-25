@@ -23,15 +23,9 @@ APP_COUNT=5
 for i in $(seq 1 $APP_COUNT);
 do
   APP_NAME="app-$i"
-  argocd app create $APP_NAME \
-    --repo $REPO_URL \
-    --path $APP_PATH \
-    --dest-server $DEST_SERVER \
-    --sync-policy automated \
-    --dest-namespace $APP_NAME \
-    --app-namespace argocd \
-    --sync-policy automated 
-  echo "Created application: $APP_NAME"
+  argocd app delete $APP_NAME \
+    --yes
+  echo "Deleted application: $APP_NAME"
 done
 
 # Log out after the process

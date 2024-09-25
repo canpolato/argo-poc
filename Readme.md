@@ -6,3 +6,10 @@ https://argocd-operator.readthedocs.io/en/latest/install/olm/
 
 #argocd install
 https://argocd-operator.readthedocs.io/en/latest/usage/basics/
+
+#argocd port-forward
+kubectl port-forward svc/example-argocd-server -n argocd 8080:443
+
+#make script executable
+chmod +x ./argo-app-create.bash 
+

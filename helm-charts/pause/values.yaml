@@ -1,4 +1,5 @@
-replicaCount: 1
+argocdName: example-argocd
+replicaCount: 5
 image:
   repository: k8s.gcr.io/pause
   pullPolicy: IfNotPresent
