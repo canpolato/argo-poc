@@ -32,6 +32,10 @@ do
     --app-namespace argocd \
     --sync-policy automated 
   echo "Created application: $APP_NAME"
+
+  # argocd --grpc-web app patch "$APP_NAME" --type merge --patch '{"spec": {"syncPolicy": {"managedNamespaceMetadata": {"labels": {"argocd.argoproj.io/managed-by": "example-argocd"}}}}}'
+  # echo "Patched application: $APP_NAME"
+
 done
 
 # Log out after the process
