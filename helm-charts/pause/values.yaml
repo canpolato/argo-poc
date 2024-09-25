@@ -1,4 +1,4 @@
-argocdName: argocd
+argocdName: example-argocd
 replicaCount: 5
 image:
   repository: k8s.gcr.io/pause
