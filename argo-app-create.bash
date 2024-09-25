@@ -30,7 +30,8 @@ do
     --sync-policy automated \
     --dest-namespace $APP_NAME \
     --app-namespace argocd \
-    --sync-policy automated 
+    --sync-policy automated \
+    --sync-option CreateNamespace=true
   echo "Created application: $APP_NAME"
 
   # argocd --grpc-web app patch "$APP_NAME" --type merge --patch '{"spec": {"syncPolicy": {"managedNamespaceMetadata": {"labels": {"argocd.argoproj.io/managed-by": "example-argocd"}}}}}'
