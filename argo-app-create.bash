@@ -34,8 +34,8 @@ do
     --sync-option CreateNamespace=true 
   echo "Created application: $APP_NAME"
 
-  # argocd --grpc-web app patch "$APP_NAME" --type merge --patch '{"spec": {"syncPolicy": {"managedNamespaceMetadata": {"labels": {"argocd.argoproj.io/managed-by": "argocd"}}}}}'
-  # echo "Patched application: $APP_NAME"
+  argocd --grpc-web app patch "$APP_NAME" --type merge --patch '{"spec": {"syncPolicy": {"managedNamespaceMetadata": {"labels": {"argocd.argoproj.io/managed-by": "example-argocd"}}}}}'
+  echo "Patched application: $APP_NAME"
 
 done
 
