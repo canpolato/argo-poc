@@ -1,5 +1,5 @@
 #minikube start
-minikube start -p argocd --cpus=8 --disk-size=40gb --memory=16gb --extra-config=kubelet.max-pods=6000
+minikube start -p argocd --cpus=6 --memory=12gb --disk-size=40gb
 
 minikube start  -p argocd --nodes=4 --cpus=4 --memory=4gb --driver=docker --extra-config=kubelet.max-pods=2000
 
