@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Accessing parameters
+START_COUNT=$1
+END_COUNT=$2
+FOLDER=$3
+
 # ArgoCD server address
 ARGOCD_SERVER="localhost:8080"
 # ArgoCD username and password
@@ -18,21 +23,33 @@ APP_PATH="helm-charts/pause"
 DEST_SERVER="https://kubernetes.default.svc"
 DEST_NAMESPACE="default"
 
-APP_COUNT=5
+mkdir -p app-manifests/$FOLDER
 
-for i in $(seq 1 $APP_COUNT);
+for i in $(seq $START_COUNT $END_COUNT);
 do
   APP_NAME="app-$i"
-  argocd app create $APP_NAME \
+
+  argocd admin app generate-spec $APP_NAME \
     --repo $REPO_URL \
     --path $APP_PATH \
     --dest-server $DEST_SERVER \
     --dest-namespace $APP_NAME \
-    --app-namespace argocd \
     --sync-policy automated \
     --sync-option Prune=true \
-    --sync-option CreateNamespace=true 
-  echo "Created application: $APP_NAME"
+    --sync-option CreateNamespace=true \
+    > app-manifests/$FOLDER/$APP_NAME.yaml
+  echo "Generated spec: $APP_NAME"
+
+  # argocd app create $APP_NAME \
+  #   --repo $REPO_URL \
+  #   --path $APP_PATH \
+  #   --dest-server $DEST_SERVER \
+  #   --dest-namespace $APP_NAME \
+  #   --app-namespace argocd \
+  #   --sync-policy automated \
+  #   --sync-option Prune=true \
+  #   --sync-option CreateNamespace=true
+  # echo "Created application: $APP_NAME"
 
   # argocd --grpc-web app patch "$APP_NAME" --type merge --patch '{"spec": {"syncPolicy": {"managedNamespaceMetadata": {"labels": {"argocd.argoproj.io/managed-by": "example-argocd"}}}}}'
   # echo "Patched application: $APP_NAME"

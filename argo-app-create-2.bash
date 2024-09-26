@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# Accessing parameters
-START_COUNT=$1
-END_COUNT=$2
-
 # ArgoCD server address
 ARGOCD_SERVER="localhost:8080"
 # ArgoCD username and password
@@ -22,15 +18,17 @@ APP_PATH="helm-charts/pause"
 DEST_SERVER="https://kubernetes.default.svc"
 DEST_NAMESPACE="default"
 
-argocd app list -o name | xargs -n 1 argocd app delete --yes --cascade
+APP_NAME="app-custom"
+  
+argocd app create $APP_NAME \
+  --repo $REPO_URL \
+  --path $APP_PATH \
+  --dest-server $DEST_SERVER \
+  --dest-namespace $APP_NAME \
+  --app-namespace argocd \
+  --sync-policy automated \
+  --sync-option Prune=true \
+  --sync-option CreateNamespace=true
+echo "Created application: $APP_NAME"
 
-# for i in $(seq $START_COUNT $END_COUNT);
-# do
-#   APP_NAME="app-$i"
-#   argocd app delete $APP_NAME \
-#     --yes
-#   echo "Deleted application: $APP_NAME"
-# done
-
-# Log out after the process
 argocd logout $ARGOCD_SERVER
